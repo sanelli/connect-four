@@ -74,7 +74,6 @@ func main() {
 			renderer.SetDrawColor(black.R, black.G, black.B, black.A)
 			renderer.FillRect(&sdl.Rect{X: 0, Y: 0, W: 700, H: 750})
 
-			// TODO: Remove this
 			if board.Winner() == 0 {
 				dtsRect := sdl.Rect{X: int32(selectedColumn) * TILE_SIZE, Y: 0, W: TILE_SIZE, H: TILE_SIZE}
 				switch board.CurrentPlayer() {
