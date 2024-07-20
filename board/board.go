@@ -5,7 +5,7 @@ type ConnectFourBoard struct {
 	content       [][]byte
 	currentPlayer int
 	numberOfMoves []int
-	gameWon       bool
+	winner        int
 }
 
 func MakeConnectFourBoard() *ConnectFourBoard {
@@ -13,7 +13,7 @@ func MakeConnectFourBoard() *ConnectFourBoard {
 		make([][]byte, 6, 7), // 6 rows and 7 columns, (0,0) is bottom left corner
 		1,
 		make([]int, 2), // For each player the number of moves used.
-		false,
+		0,
 	}
 }
 
@@ -26,10 +26,6 @@ func (board *ConnectFourBoard) NumberOfMoves(player int) int {
 		panic("Invalid player number")
 	}
 	return board.numberOfMoves[player-1]
-}
-
-func (board *ConnectFourBoard) GameWon() bool {
-	return board.gameWon
 }
 
 // Get the content of the board
@@ -54,7 +50,7 @@ func (board *ConnectFourBoard) Play(column int) bool {
 		panic("Invalid column")
 	}
 
-	if board.gameWon {
+	if board.winner != 0 {
 		return false
 	}
 
@@ -83,17 +79,23 @@ func (board *ConnectFourBoard) Play(column int) bool {
 // * 1  : player 1 won
 // * 2  : player 2 won
 func (board *ConnectFourBoard) Winner() int {
+
+	// If the winner has already been computed no need to do anything else
+	if board.winner == -1 || board.winner == 1 || board.winner == 2 {
+		return board.winner
+	}
+
 	// Look for horizontal
 	for row := 0; row < 6; row++ {
 		for column := 0; column < 3; column++ {
-			sum := board.content[row][column] + board.content[row][column+1] + board.content[row][column+2] + board.content[row][column+3]
-			if sum == 4 {
-				board.gameWon = true
-				return 1
-			}
-			if sum == 8 {
-				board.gameWon = true
-				return 2
+			for player := byte(1); player <= 2; player++ {
+				if board.content[row][column] == player &&
+					board.content[row][column+1] == player &&
+					board.content[row][column+2] == player &&
+					board.content[row][column+3] == player {
+					board.winner = int(player)
+					return board.winner
+				}
 			}
 		}
 	}
@@ -101,19 +103,33 @@ func (board *ConnectFourBoard) Winner() int {
 	// Look for vertical
 	for column := 0; column < 7; column++ {
 		for row := 0; row < 2; row++ {
-			sum := board.content[row][column] + board.content[row+1][column] + board.content[row+2][column] + board.content[row+3][column]
-			if sum == 4 {
-				board.gameWon = true
-				return 1
-			}
-			if sum == 8 {
-				board.gameWon = true
-				return 2
+			for player := byte(1); player <= 2; player++ {
+				if board.content[row][column] == player &&
+					board.content[row+1][column] == player &&
+					board.content[row+2][column] == player &&
+					board.content[row+3][column] == player {
+					board.winner = int(player)
+					return board.winner
+				}
 			}
 		}
 	}
 
 	// Look for main digonal
+	// TODO:
+
 	// Look for minor diagonal
-	panic("Not implemented yet")
+	// TODO:
+
+	// Check if the board is full
+	for row := 0; row < 6; row++ {
+		for column := 0; column < 7; column++ {
+			if board.content[row][column] == byte(0) {
+				return 0 // there is still room to play
+			}
+		}
+	}
+
+	board.winner = -1
+	return -1
 }
