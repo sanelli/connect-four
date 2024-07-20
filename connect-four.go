@@ -105,14 +105,30 @@ func main() {
 		}
 
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-			switch event.(type) {
+			switch t := event.(type) {
 			case *sdl.QuitEvent: // NOTE: Please use `*sdl.QuitEvent` for `v0.4.x` (current version).
 				println("Quit")
 				running = false
-				break
+			case *sdl.KeyboardEvent:
+				if t.Type == sdl.KEYUP {
+					if t.Keysym.Sym == sdl.K_RIGHT {
+						changed = true
+						selectedColumn = selectedColumn + 1
+						if selectedColumn > 6 {
+							selectedColumn = 6
+						}
+					} else if t.Keysym.Sym == sdl.K_LEFT {
+						changed = true
+						selectedColumn = selectedColumn - 1
+						if selectedColumn < 0 {
+							selectedColumn = 0
+						}
+					}
+				}
 			}
 		}
 
+		// TODO: Remove this delay
 		sdl.Delay(33)
 	}
 }
