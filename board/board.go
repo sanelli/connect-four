@@ -87,7 +87,7 @@ func (board *ConnectFourBoard) Winner() int {
 
 	// Look for horizontal
 	for row := 0; row < 6; row++ {
-		for column := 0; column < 3; column++ {
+		for column := 0; column < 4; column++ {
 			for player := byte(1); player <= 2; player++ {
 				if board.content[row][column] == player &&
 					board.content[row][column+1] == player &&
@@ -102,7 +102,7 @@ func (board *ConnectFourBoard) Winner() int {
 
 	// Look for vertical
 	for column := 0; column < 7; column++ {
-		for row := 0; row < 2; row++ {
+		for row := 0; row < 3; row++ {
 			for player := byte(1); player <= 2; player++ {
 				if board.content[row][column] == player &&
 					board.content[row+1][column] == player &&
@@ -116,10 +116,34 @@ func (board *ConnectFourBoard) Winner() int {
 	}
 
 	// Look for main digonal
-	// TODO:
+	for row := 0; row < 3; row++ {
+		for column := 0; column < 4; column++ {
+			for player := byte(1); player <= 2; player++ {
+				if board.content[row][column] == player &&
+					board.content[row+1][column+1] == player &&
+					board.content[row+1][column+2] == player &&
+					board.content[row+1][column+3] == player {
+					board.winner = int(player)
+					return board.winner
+				}
+			}
+		}
+	}
 
-	// Look for minor diagonal
-	// TODO:
+	// Look for other diagonal
+	for row := 3; row < 6; row++ {
+		for column := 0; column < 4; column++ {
+			for player := byte(1); player <= 2; player++ {
+				if board.content[row][column] == player &&
+					board.content[row-1][column+1] == player &&
+					board.content[row-1][column+2] == player &&
+					board.content[row-1][column+3] == player {
+					board.winner = int(player)
+					return board.winner
+				}
+			}
+		}
+	}
 
 	// Check if the board is full
 	for row := 0; row < 6; row++ {
