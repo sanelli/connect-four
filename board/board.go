@@ -4,7 +4,6 @@ package board
 type ConnectFourBoard struct {
 	content       [][]byte
 	currentPlayer int
-	numberOfMoves []int
 	winner        int
 }
 
@@ -12,7 +11,6 @@ func MakeConnectFourBoard() *ConnectFourBoard {
 	board := ConnectFourBoard{
 		make([][]byte, 6), // 6 rows and 7 columns, (0,0) is bottom left corner
 		1,
-		make([]int, 2), // For each player the number of moves used.
 		0,
 	}
 
@@ -28,13 +26,6 @@ func MakeConnectFourBoard() *ConnectFourBoard {
 
 func (board *ConnectFourBoard) CurrentPlayer() int {
 	return board.currentPlayer
-}
-
-func (board *ConnectFourBoard) NumberOfMoves(player int) int {
-	if player < 1 || player > 2 {
-		panic("Invalid player number")
-	}
-	return board.numberOfMoves[player-1]
 }
 
 // Get the content of the board
@@ -76,7 +67,6 @@ func (board *ConnectFourBoard) Play(column int) bool {
 		return false
 	}
 
-	board.numberOfMoves[board.currentPlayer-1] += 1
 	board.currentPlayer = (board.currentPlayer % 2) + 1
 	return true
 }
@@ -123,6 +113,8 @@ func (board *ConnectFourBoard) Winner() int {
 			}
 		}
 	}
+
+	// TODO: Code for diagonals is INCORRECT :(
 
 	// Look for main digonal
 	for row := 0; row < 3; row++ {
