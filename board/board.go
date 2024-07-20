@@ -114,16 +114,14 @@ func (board *ConnectFourBoard) Winner() int {
 		}
 	}
 
-	// TODO: Code for diagonals is INCORRECT :(
-
 	// Look for main digonal
 	for row := 0; row < 3; row++ {
 		for column := 0; column < 4; column++ {
 			for player := byte(1); player <= 2; player++ {
 				if board.content[row][column] == player &&
 					board.content[row+1][column+1] == player &&
-					board.content[row+1][column+2] == player &&
-					board.content[row+1][column+3] == player {
+					board.content[row+2][column+2] == player &&
+					board.content[row+3][column+3] == player {
 					board.winner = int(player)
 					return board.winner
 				}
@@ -137,8 +135,8 @@ func (board *ConnectFourBoard) Winner() int {
 			for player := byte(1); player <= 2; player++ {
 				if board.content[row][column] == player &&
 					board.content[row-1][column+1] == player &&
-					board.content[row-1][column+2] == player &&
-					board.content[row-1][column+3] == player {
+					board.content[row-2][column+2] == player &&
+					board.content[row-3][column+3] == player {
 					board.winner = int(player)
 					return board.winner
 				}
