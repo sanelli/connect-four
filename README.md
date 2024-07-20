@@ -11,6 +11,6 @@
 
 ## Screenshots
 
-<img width="1440" alt="image" src="https://github.com/user-attachments/assets/a38de542-f5c9-4aef-b760-58babc8fc3e1">
+<img width="812" alt="image" src="https://github.com/user-attachments/assets/ec05ea02-b7de-4f1a-9bbd-bab74a7be8a4">
 
-<img width="1440" alt="image" src="https://github.com/user-attachments/assets/09e5a573-3b02-47e5-90d7-c972c7a02d2b">
+<img width="812" alt="image" src="https://github.com/user-attachments/assets/9d53ec86-2b88-4b58-95d9-b6b35202980b">
