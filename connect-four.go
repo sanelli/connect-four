@@ -66,7 +66,7 @@ func main() {
 	// Sample rendering
 	running := true
 	changed := true
-	selectedColumn := 0
+	selectedColumn := 3
 	srcRect := sdl.Rect{X: 0, Y: 0, W: TILE_SIZE, H: TILE_SIZE}
 	for running {
 
@@ -123,6 +123,10 @@ func main() {
 						if selectedColumn < 0 {
 							selectedColumn = 0
 						}
+					} else if t.Keysym.Sym == sdl.K_DOWN || t.Keysym.Sym == sdl.K_SPACE {
+						changed = true
+						board.Play(selectedColumn)
+						selectedColumn = 3
 					}
 				}
 			}
