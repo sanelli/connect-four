@@ -9,12 +9,21 @@ type ConnectFourBoard struct {
 }
 
 func MakeConnectFourBoard() *ConnectFourBoard {
-	return &ConnectFourBoard{
-		make([][]byte, 6, 7), // 6 rows and 7 columns, (0,0) is bottom left corner
+	board := ConnectFourBoard{
+		make([][]byte, 6), // 6 rows and 7 columns, (0,0) is bottom left corner
 		1,
 		make([]int, 2), // For each player the number of moves used.
 		0,
 	}
+
+	for row := 0; row < 6; row++ {
+		board.content[row] = make([]byte, 7)
+		for column := 0; column < 7; column++ {
+			board.content[row][column] = 0
+		}
+	}
+
+	return &board
 }
 
 func (board *ConnectFourBoard) CurrentPlayer() int {
